@@ -8,11 +8,28 @@ This is because for relatively simpler problems like this one putting a lot of h
 My accuracy score was 100 for c(50,3),  100% for  c(20,16,10,5) and 96.66% for  c(30,24,20,18,16,14,12,8,6,3).
 
 Results
-Configuration	Accuracy
-c(50,3)	100%
-c(20,16,10,5)	100%
-c(30,24,20,18,16,14,12,8,6,3)	96.66%
-	
-	
+Tabular Report
+Number of Hidden Layers	Accuracy (%)
+6	100
+10	100
+2	96.67
+Results:
+
+Each model's accuracy is evaluated and compared. Plots of the neural network architecture and performance metrics are included.
+
+Files Included
+R Markdown Document (.Rmd): Contains the code for data preparation, model training, and evaluation. Output Document (.pdf): Compiled PDF report with results and plots. Installation and Usage To run the code, make sure to install the necessary R packages:
+
+Requirements
+R (version 4.0.0 or later)
+R packages:
+neuralnet
+keras
+tensorflow
+tidyverse
+Installation
+Install R: If you don't have R installed, download and install it from CRAN.
+
+Install Required Packages: Open R and run the following command to install the necessary packages:
 
 
