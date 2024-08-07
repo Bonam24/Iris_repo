@@ -1,0 +1,88 @@
+---
+title: "bonam"
+author: "bonam"
+date: "2024-08-06"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+install.packages(c('neuralnet','keras','tensorflow'), dependencies = T)
+install.packages(c("neuralnet", "keras", "tensorflow"), dependencies = T)
+library(neuralnet)
+install.packages("tidyverse")
+library(tidyverse)
+data<-read_csv(flower_data.csv)
+data<-read_csv("flower_data.csv")
+str(data)
+summarise(data)
+sample_n(data, 5)
+#normalize columns
+
+data$SepalLengthCm <- normalize(data$SepalLengthCm)
+data$SepalWidthCm <- normalize(data$SepalWidthCm)
+data$PetalLengthCm <- normalize(data$PetalLengthCm)
+data$PetalWidthCm <- normalize(data$PetalWidthCm)
+sample_n(data,5)
+set.seed(254)
+data_rows<-floor(0.80 * nrow(data))
+data_rows
+train_indices<-sample(c(1:nrow(data)), data_rows)
+train_indices
+train_data<-data[train_indices, ]
+sample_n(train_data,5)
+test_data<-iris[-train_indices,]
+sample_n(test_data,5)
+# Initialize weights and biases for network
+initialize_parameters <- function(input_size, hidden_size, output_size) {
+params <- list()
+params$w1 <- matrix(rnorm(input_size * hidden_size), nrow = hidden_size, ncol = input_size) # Weights for first layer
+params$b1 <- matrix(0, nrow = hidden_size, ncol = 1) # Biases for first layer
+params$w2 <- matrix(rnorm(hidden_size * output_size), nrow = output_size, ncol = hidden_size) # Weights for second layer
+params$b2 <- matrix(0, nrow = output_size, ncol = 1) # Biases for second layer
+return(params)
+}
+
+softmax <- function(x) {
+exp_x <- exp(x - max(x)) # To improve numerical stability
+return(exp_x / sum(exp_x))
+}
+#for the output layers
+#for cross entropy
+cross_entropy_loss <- function(y_true, y_pred) {
+return(-sum(y_true * log(y_pred)))
+}
+#for forward propagation
+forward_propagation <- function(X, params) {
+Z1 <- params$W1 %% X + params$b1 %% matrix(1, nrow = 1, ncol = ncol(X)) # Compute linear combination for hidden layer
+A1 <- sigmoid(Z1) # Apply activation function
+Z2 <- params$W2 %% A1 + params$b2 %% matrix(1, nrow = 1, ncol = ncol(A1)) # Compute linear combination for output layer
+A2 <- apply(Z2, 2, softmax) # Apply softmax to get probabilities
+cache <- list(Z1 = Z1, A1 = A1, Z2 = Z2, A2 = A2)
+return(cache)
+}
+#for backward prop
+
+
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
